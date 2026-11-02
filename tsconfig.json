@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "**/*.mts",
+    "app/(learner)/offline/[packageId]/page.jsx",
+    "app/(learner)/lessons/[lessonId]/page.jsx",
+    "app/(learner)/learn/page.jsx",
+    "app/(learner)/dashboard/page.jsx",
+    "app/(learner)/assessments/page.jsx",
+    "app/page.jsx",
+    "app/layout.jsx",
+    "app/(learner)/progress/page.jsx",
+    "app/(public)/login/page.jsx",
+    "app/(public)/recover-account/page.jsx",
+    "app/(admin)/admin/Overview/page.jsx",
+    "app/(admin)/admin/settings/page.jsx",
+    "app/(admin)/admin/learners/page.jsx",
+    "app/(admin)/admin/layout.jsx"
+  ],
+  "exclude": ["node_modules"]
+}

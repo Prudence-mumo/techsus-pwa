@@ -1,0 +1,117 @@
+.recover-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.recover-card {
+  background: #ffffff;
+  padding: 45px 40px;
+
+  border-radius: 32px;
+  width: 100%;
+  max-width: 460px;
+
+  box-shadow: 0px 20px 40px rgba(31, 41, 55, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.recover-card h2 {
+  color: #1e3a8a;
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.recover-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.recover-field span {
+  font-size: 14px;
+  color: #475569;
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.recover-field input {
+  padding: 14px 18px;
+  border: 1.5px solid #cbd5e1;
+
+  border-radius: 16px;
+  font-size: 16px;
+  outline: none;
+  background-color: #f8fafc; /* Adds depth inside the inputs */
+  transition: all 0.2s ease-in-out;
+}
+
+.recover-field input:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.recover-card button {
+  background-color: #1e3a8a;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0px 4px 12px rgba(30, 58, 138, 0.2);
+  transition: all 0.2s ease;
+  margin-top: 12px;
+}
+
+.recover-card button:hover {
+  background-color: #172554;
+  transform: translateY(-1px);
+  box-shadow: 0px 6px 16px rgba(30, 58, 138, 0.3);
+}
+
+.recover-card button:active {
+  transform: translateY(0);
+}
+
+.recover-card button:disabled {
+  background-color: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.recover-error {
+  color: #dc2626;
+  font-size: 14px;
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+}
+
+.recover-card p {
+  text-align: center;
+  margin: 12px 0 0 0;
+}
+
+.recover-card a {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.recover-card a:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}

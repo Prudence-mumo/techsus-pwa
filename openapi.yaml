@@ -1,0 +1,360 @@
+openapi: 3.0.3
+info:
+  title: TechSus Offline Package & Progress Sync API
+  description: API specifications coordinating frontend IndexedDB state queues with backend services.
+  version: 1.0.0
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://127.0.0.1:8000
+    description: Local Development Server
+
+security: []
+
+paths:
+  /api/v1/content/dictionary/search:
+    get:
+      summary: Search the dictionary
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Matching dictionary entries
+          content:
+            application/json:
+              schema:
+                type: object
+        "404":
+          description: Word not found
+
+  /packages:
+    get:
+      summary: Retrieve published educational packages
+      description: Fetches a list of packages available for offline downloading.
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            default: published
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 200
+      responses:
+        "200":
+          description: A successful array of packages or a paginated envelope object.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Package"
+
+  /sync/events:
+    post:
+      summary: Flush synchronized client outbox events
+      description: Processes array actions tracking downloads and progression states.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SyncEvent"
+      responses:
+        "200":
+          description: Event processed successfully.
+        "409":
+          description: Conflict (Event ID already exists on server).
+        "401":
+          description: Unauthorized session credential keys.
+
+  /ai-tutor/students/{student_id}/conversations:
+    get:
+      summary: List tutor conversations
+      parameters:
+        - name: student_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/progress:
+    get:
+      summary: List all progress
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/progress/student/{student_id}:
+    get:
+      summary: Get student progress
+      parameters:
+        - name: student_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/users:
+    get:
+      summary: List all users (Admin)
+      responses:
+        "200":
+          description: List of users retrieved successfully
+
+  /api/v1/users/{user_id}:
+    get:
+      summary: Get user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+    patch:
+      summary: Update user details (Admin)
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User updated successfully
+    delete:
+      summary: Delete user and revoke sessions (Admin)
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User deleted successfully
+
+  /api/v1/settings:
+    get:
+      summary: Get institution settings (Admin)
+      responses:
+        "200":
+          description: Settings retrieved successfully
+    put:
+      summary: Update institution settings (Admin)
+      responses:
+        "200":
+          description: Settings saved successfully
+
+  /api/v1/topics/{topic_id}:
+    patch:
+      summary: Update topic (Admin)
+      parameters:
+        - name: topic_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Topic updated successfully
+    delete:
+      summary: Deactivate or delete topic (Admin)
+      parameters:
+        - name: topic_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Topic deactivated successfully
+
+  /api/v1/lesson-progress/topics/{topic_id}/content/{content_id}:
+    get:
+      summary: Get lesson progress
+      parameters:
+        - name: topic_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: content_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/topics:
+    get:
+      summary: List topics
+      responses:
+        "200":
+          description: OK
+
+  /api/v1/tutor:
+    post:
+      summary: AI Tutor Interaction Endpoint
+      responses:
+        "200":
+          description: Tutor response returned successfully
+        "400":
+          description: Bad request
+
+  /api/v1/dictionary:
+    get:
+      summary: Dictionary search and lookup
+      responses:
+        "200":
+          description: Dictionary results
+        "400":
+          description: Bad request
+
+  /api/v1/progress-summary:
+    get:
+      summary: Summarized learner progress
+      responses:
+        "200":
+          description: Progress summary data
+        "400":
+          description: Bad request
+
+components:
+  schemas:
+    Package:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        subject_name:
+          type: string
+        class_level:
+          type: string
+        file_path_url:
+          type: string
+        checksum:
+          type: string
+        size_bytes:
+          type: integer
+        package_version:
+          type: string
+        manifest:
+          type: array
+          items:
+            type: string
+
+    SyncEvent:
+      type: object
+      required:
+        - client_event_id
+        - student_id
+        - event_type
+      properties:
+        client_event_id:
+          type: string
+          format: uuid
+        student_id:
+          type: string
+        device_id:
+          type: string
+        event_type:
+          type: string
+          enum: [package_download, progress_sync]
+        client_occurred_at:
+          type: string
+          format: date-time
+        event_payload:
+          type: object
+
+  /api/v1/settings:
+    get:
+      summary: Get institution settings
+      responses:
+        "200":
+          description: Settings object
+    put:
+      summary: Update institution settings
+      responses:
+        "200":
+          description: Updated settings
+
+  /api/v1/users:
+    get:
+      summary: List users
+      responses:
+        "200":
+          description: Users list
+    delete:
+      summary: Delete user
+      responses:
+        "200":
+          description: Deleted
+
+  /api/v1/users/{user_id}:
+    patch:
+      summary: Update user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated user
+
+  /api/v1/topics:
+    get:
+      summary: List topics
+      responses:
+        "200":
+          description: Topics list
+
+  /api/v1/topics/{topic_id}:
+    patch:
+      summary: Update topic
+      parameters:
+        - name: topic_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated topic
+    delete:
+      summary: Delete topic
+      responses:
+        "200":
+          description: Deleted
+
+  /api/v1/sync-events:
+    get:
+      summary: List sync events
+      responses:
+        "200":
+          description: Sync events list

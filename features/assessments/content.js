@@ -1,0 +1,23 @@
+export const assessmentsContent = {
+  pageTitle: "A chance to check in",
+  backLabel: "Go back",
+  subtitle: "See what you know, and discover where to grow next",
+  startAssessment: "Start assessment",
+  recentResults: "Recent results",
+  viewAll: "View all",
+  rememberLabel: "Remember",
+  tutorPlaceholder: "Do you have any questions",
+  tutorLabel: "Ask your tutor",
+  sendQuestion: "Send question",
+  sending: "Sending",
+  loading: "Loading your assessments",
+  loadError: "We could not load your assessments.",
+  tutorError: "Your question could not be sent. Please try again.",
+  retry: "Try again",
+  noSuggested: "No assessment is ready for you right now.",
+  noResults: "You have no results yet.",
+  questionCount: (count) =>
+    `${count} ${count === 1 ? "question" : "questions"}`,
+  estimatedMinutes: (minutes) => `Approximately ${minutes} minutes`,
+  completedOn: (date) => `Completed ${date}`,
+};

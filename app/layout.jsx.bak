@@ -1,0 +1,88 @@
+"use client";
+
+import { Suspense } from "react";
+import { Nunito_Sans } from "next/font/google";
+import Image from "next/image";
+import OfflineProvider from "@/components/OfflineProvider";
+import OfflineBanner from "@/components/OfflineBanner";
+import Sidebar from "@/components/Sidebar";
+import "./globals.css";
+import "katex/dist/katex.min.css";
+
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-nunito",
+  fallback: ["Arial", "Helvetica", "sans-serif"],
+});
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={nunitoSans.variable}>
+      <body className="antialiased bg-redu-bg text-gray-800">
+        <OfflineProvider>
+          {/* Removed overflow-x-hidden here so sticky positioning respects the main window viewport */}
+          <div className="flex min-h-screen w-full pb-16 lg:pb-0">
+            {/* Sidebar (Fixed on Desktop & Horizontal Bottom Nav on Mobile) */}
+            <Suspense fallback={null}>
+              <Sidebar />
+            </Suspense>
+
+            {/* Main Content Container */}
+            <div className="flex-1 w-full lg:pl-64 min-w-0 flex flex-col">
+              <OfflineBanner />
+
+              {/* STICKY PERSISTENT GLOBAL BLUE HEADER */}
+              <header className="bg-[#1B2269] text-white px-8 py-6 flex items-center justify-between sticky top-0 z-40 shadow-md w-full">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      window.history.back();
+                    }
+                  }}
+                  className="flex items-center justify-center p-2 rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
+                  aria-label="Go back"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={3.5}
+                    stroke="currentColor"
+                    className="w-8 h-8 text-white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                    />
+                  </svg>
+                </button>
+
+                <div className="flex items-center gap-3.5">
+                  <span className="font-extrabold text-base tracking-wide">
+                    Student
+                  </span>
+                  <div className="w-10 h-10 rounded-full bg-white/25 flex items-center justify-center overflow-hidden relative">
+                    <Image
+                      src="/icons/user.png"
+                      alt="User profile"
+                      width={38}
+                      height={38}
+                      style={{ width: "auto", height: "auto" }}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                </div>
+              </header>
+
+              <main className="flex-1 flex flex-col">{children}</main>
+            </div>
+          </div>
+        </OfflineProvider>
+      </body>
+    </html>
+  );
+}

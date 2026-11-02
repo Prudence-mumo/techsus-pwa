@@ -1,0 +1,24 @@
+# This file instructs Redocly's linter to ignore the rules contained for specific parts of your API.
+# See https://redocly.com/docs/cli/ for more information.
+openapi.yaml:
+  operation-operationId:
+    - "#/paths/~1api~1v1~1content~1dictionary~1search/get/operationId"
+    - "#/paths/~1packages/get/operationId"
+    - "#/paths/~1sync~1events/post/operationId"
+    - "#/paths/~1ai-tutor~1students~1{student_id}~1conversations/get/operationId"
+    - "#/paths/~1api~1v1~1progress/get/operationId"
+    - "#/paths/~1api~1v1~1progress~1student~1{student_id}/get/operationId"
+    - "#/paths/~1api~1v1~1users~1{user_id}/get/operationId"
+    - "#/paths/~1api~1v1~1lesson-progress~1topics~1{topic_id}~1content~1{content_id}/get/operationId"
+    - "#/paths/~1api~1v1~1topics/get/operationId"
+    - "#/paths/~1api~1v1~1tutor/post/operationId"
+    - "#/paths/~1api~1v1~1dictionary/get/operationId"
+    - "#/paths/~1api~1v1~1progress-summary/get/operationId"
+  operation-4xx-response:
+    - "#/paths/~1packages/get/responses"
+    - "#/paths/~1ai-tutor~1students~1{student_id}~1conversations/get/responses"
+    - "#/paths/~1api~1v1~1progress/get/responses"
+    - "#/paths/~1api~1v1~1progress~1student~1{student_id}/get/responses"
+    - "#/paths/~1api~1v1~1users~1{user_id}/get/responses"
+    - "#/paths/~1api~1v1~1lesson-progress~1topics~1{topic_id}~1content~1{content_id}/get/responses"
+    - "#/paths/~1api~1v1~1topics/get/responses"

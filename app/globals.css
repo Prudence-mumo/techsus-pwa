@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --theme-bg: #f4f6fa;
+  --theme-text: #1e293b;
+  --nav-bg: #1b2269;
+  --nav-text: #ffffff;
+  --nav-accent: #3fa9f5;
+  --nav-surface: #ffffff;
+  --nav-border: #e5e7eb;
+  --nav-muted: #6b7280;
+  --theme-font-size: 16px;
+}
+
+html {
+  background: var(--theme-bg);
+}
+
+body {
+  background: var(--theme-bg);
+  color: var(--theme-text);
+  font-size: var(--theme-font-size);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
